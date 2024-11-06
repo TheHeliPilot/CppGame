@@ -16,7 +16,6 @@ public:
     bool is_key_pressed(SDL_Keycode key) const;
     const std::vector<SDL_Keycode>& get_pressed_keys() const;
 
-    // This method needs to be called whenever a key event is triggered
     void on_key_event(SDL_Keycode key, bool is_pressed);
     
 private:

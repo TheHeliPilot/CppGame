@@ -9,6 +9,7 @@
 
 //custom
 #include "../CustomScripts/player_movement.h"
+#include "../CustomScripts/wall_script.h"
 
 //other
-//#include "keyboard_handler.h"
+#include "keyboard_handler.h"

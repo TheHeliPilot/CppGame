@@ -1,11 +1,7 @@
 ﻿#pragma once
 
-#ifndef PHYSICS_COMPONENT_H
-#define PHYSICS_COMPONENT_H
-
-#include "transform_component.h"
-#include "../game.h"
-
+#include "components.h"
+#include "../vector2.h"
 
 class physics_component final : public component {
 public:
@@ -21,7 +17,7 @@ public:
     void init() override
     {
         transform_ = &entity->get_component<transform_component>();
-        game::physics_components.push_back(this);
+        game::physics_components.emplace_back(this);
     }
     
     void update() override
@@ -42,6 +38,10 @@ public:
     {
         velocity_ = velocity;
     }
+    void set_pos(const vector2 pos) const
+    {
+        transform_->position = pos;
+    }
     
 private:
     vector2 velocity_ = vector2(0, 0);
@@ -49,5 +49,3 @@ private:
     transform_component* transform_ = nullptr;
     
 };
-
-#endif

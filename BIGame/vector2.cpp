@@ -101,6 +101,17 @@ vector2& vector2::zero()
     return *this;
 }
 
+float vector2::length() const
+{
+    return sqrt(this->x * this->x + this->y * this->y);
+}
+
+vector2& vector2::normalize() const
+{
+    const float length = this->length();
+    return *new vector2(this->x / length, this->y / length);
+}
+
 std::ostream& operator<<(std::ostream& os, const vector2 vec)
 {
     os << "vec2(" << vec.x << ", " << vec.y << ")";

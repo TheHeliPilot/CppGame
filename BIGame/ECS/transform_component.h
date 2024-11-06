@@ -1,13 +1,15 @@
 ﻿#pragma once
 
 #include "components.h"
-#include "../vector2.h"
+//#include "../vector2.h"
 
-class transform_component : public component
+class transform_component final : public component
 {
     
 public:
     vector2 position;
+
+    bool replicates = false;
 
     int height = 16;
     int width = 16;
@@ -40,5 +42,10 @@ public:
     transform_component(const vector2& position)
     {
         this->position = position;
+    }
+    transform_component(const vector2& position, const int scale)
+    {
+        this->position = position;
+        this->scale = scale;
     }
 };

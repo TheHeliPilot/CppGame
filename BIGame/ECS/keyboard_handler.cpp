@@ -32,7 +32,7 @@ void keyboard_handler::draw()
 {
 }
 
-bool keyboard_handler::is_key_pressed(SDL_Keycode key) const
+bool keyboard_handler::is_key_pressed(const SDL_Keycode key) const
 {
     return current_keys_.find(key) != current_keys_.end();
 }

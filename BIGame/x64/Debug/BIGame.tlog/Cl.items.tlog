@@ -1,9 +1,13 @@
 C:\Users\bucka\Počítač\BIGame\BIGame\BIGame.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\BIGame.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\collision.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\collision.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\CustomScripts\player_movement.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\player_movement.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\CustomScripts\wall_script.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\wall_script.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\ECS\asset_manager.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\asset_manager.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\collider_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\collider_component.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\ECS\ecs.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\ecs.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\keyboard_handler.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\keyboard_handler.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\game.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\game.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\game_object.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\game_object.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\network_handler.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\network_handler.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\texture_manager.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\texture_manager.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\vector2.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\vector2.obj

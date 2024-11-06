@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#ifndef VECTOR2_H
-#define VECTOR2_H
-
 #include <iostream>
 
 class vector2
@@ -33,6 +30,9 @@ public:
     vector2& operator*(const float& i);
     vector2& zero();
 
+    float length() const;
+    vector2& normalize() const;
+
     vector2 operator-() const
     {
         return vector2(-x, -y);
@@ -40,5 +40,3 @@ public:
     
     friend std::ostream& operator<<(std::ostream& os, const vector2 vec);
 };
-
-#endif

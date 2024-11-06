@@ -1,21 +1,19 @@
 ﻿#pragma once
 
 #include "components.h"
-#include <SDL.h>
-
-#include "transform_component.h"
 #include "../texture_manager.h"
 
 class sprite_component : public component
 {
 public:
         sprite_component() = default;
-        sprite_component(const char* path)
+
+        explicit sprite_component(const char* path)
         {
                 set_tex(path);
         }
 
-        ~sprite_component()
+        ~sprite_component() override
         {
                 SDL_DestroyTexture(texture_);
         }
@@ -24,7 +22,7 @@ public:
         {
                 texture_ = texture_manager::load_texture(path);
         }
-        
+
         void init() override
         {
                 transform_ = &entity->get_component<transform_component>();

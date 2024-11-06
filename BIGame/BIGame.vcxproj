@@ -237,16 +237,22 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="CustomScripts\player_movement.cpp" />
+    <ClCompile Include="CustomScripts\wall_script.cpp" />
+    <ClCompile Include="ECS\asset_manager.cpp" />
     <ClCompile Include="ECS\collider_component.cpp" />
+    <ClCompile Include="ECS\ecs.cpp" />
     <ClCompile Include="ECS\keyboard_handler.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_object.cpp" />
+    <ClCompile Include="network_handler.cpp" />
     <ClCompile Include="texture_manager.cpp" />
     <ClCompile Include="vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h" />
     <ClInclude Include="CustomScripts\player_movement.h" />
+    <ClInclude Include="CustomScripts\wall_script.h" />
+    <ClInclude Include="ECS\asset_manager.h" />
     <ClInclude Include="ECS\collider_component.h" />
     <ClInclude Include="ECS\components.h" />
     <ClInclude Include="ECS\ecs.h" />
@@ -255,6 +261,7 @@
     <ClInclude Include="ECS\transform_component.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_object.h" />
+    <ClInclude Include="network_handler.h" />
     <ClInclude Include="texture_manager.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>
