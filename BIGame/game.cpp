@@ -14,8 +14,8 @@
 
 //networking
 struct addrinfo *result = nullptr, *ptr = nullptr, hints;
-SOCKET listen_socket = INVALID_SOCKET;
-SOCKET connect_socket = INVALID_SOCKET;
+SOCKET game::listen_socket = INVALID_SOCKET;
+SOCKET game::connect_socket = INVALID_SOCKET;
 
 SDL_Renderer* game::renderer = nullptr;
 SDL_Event game::event;
@@ -211,7 +211,7 @@ void game::init(const char* title, const int x_pos, const int y_pos, const int w
     }
 
     //thread
-    network_handler::last_data.flag = "OLD_DATA";
+    network_handler::last_data = {};
     recv_thread = std::thread(&network_handler::receive_data_thread, std::ref(connect_socket), std::ref(network_handler::last_data), std::ref(is_receiving_), std::ref(is_running_));
     
 #pragma endregion
@@ -259,118 +259,15 @@ void game::update()
     //std::cout << "Updating game\n";
     
     //collision handle
-    for (const auto physics_component : physics_components)
-    {
-        for (const auto collider_component : colliders)
-        {
-            if(physics_component->entity == collider_component->entity) continue;
-            
-            if(collision->aabb(physics_component->entity->get_component<class collider_component>(), *collider_component))
-            {
-                physics_component->entity->get_component<class collider_component>().collided(*collider_component, collider_component->collision_tag);
-                
-                if(!collider_component->trigger)
-                    physics_component->entity->get_component<transform_component>().position = physics_component->late_pos;
-            }
-        }
-    }
+    handle_collision();
 
-    //TODO Opravit networking na nieco lepsie lebo toto je fakt ze bordel (ale funguje :DDDD)
+    //sending data
+    network_handler::send_data(connect_socket, network_handler::make_data("player_pos", network_handler::serialize_vector2(player.get_component<transform_component>().position)));
 
-    //if (!is_server_) {
-    //    network_handler::send_transform_data(connect_socket, player.get_component<transform_component>());
-    //    network_handler::receive_transform_data(connect_socket, client.get_component<transform_component>());
-    //} else {
-    //    network_handler::handle_client_operations(connect_socket, client, wall);
-    //}
 
-    const char* send_data = network_handler::make_data("player_pos", network_handler::serialize(player.get_component<transform_component>().position));
-    network_handler::send_data(connect_socket, send_data);
-
-    if(!is_receiving_)
-    {
-        std::cout << "recieved data! tag: " << network_handler::last_data.flag << "\n";
-    }
-    else if(strcmp(network_handler::last_data.flag, "OLD_DATA") != 0)
-    {
-        std::cout << "receiving data\n";
-    }else
-    {
-        std::cout << "old data\n";
-    }
+    //handle data
+    network_handler::process_received_data(player, client, wall);
     
-    //const auto* rcv_data = network_handler::rcv_data(connect_socket);
-    //if(rcv_data != nullptr)
-    //{
-    //    const network_data des_data = network_handler::get_data(*rcv_data);
-    //    
-    //    if(strcmp(des_data.flag, "player_pos") == 0)
-    //    {
-    //        client.get_component<transform_component>().position = network_handler::deserialize<vector2>(des_data.data);
-    //    }
-    //}
-    //else
-    //{
-    //    std::cout << "received no data\n";
-    //}
-
-    
-    
-/*
-    if(!is_server_)
-    {
-        network_handler::send_data(connect_socket, network_handler::serialize(player.get_component<transform_component>().position), sizeof(vector2));
-    }
-    else
-    {
-        const auto* data = network_handler::rcv_data(connect_socket);
-        if(data != nullptr)
-        {
-            //std::cout << network_handler::deserialize<vector2>(data) << '\n';
-            client.get_component<transform_component>().position = network_handler::deserialize<vector2>(data);
-        }
-        else
-        {
-            std::cout << "received no data\n";
-        }
-    }
-//
-    if(is_server_)
-    {
-        network_handler::send_data(connect_socket, network_handler::serialize(wall.get_component<wall_script>().is_on), sizeof(bool));
-    }else
-    {
-        const auto* data = network_handler::rcv_data(connect_socket);
-        if(data != nullptr)
-        {
-            //std::cout << network_handler::deserialize<vector2>(data) << '\n';
-            if(wall.get_component<wall_script>().is_on != network_handler::deserialize<bool>(data))
-                wall.get_component<wall_script>().is_on = network_handler::deserialize<bool>(data);
-        }
-        else
-        {
-            std::cout << "received no data\n";
-        }
-    }
-//
-    if(!is_server_)
-    {
-        const auto dta = "toggle_button";
-        network_handler::send_data(connect_socket, dta, strlen(dta));
-    }else
-    {
-        const auto* data = network_handler::rcv_data(connect_socket);
-        if(data != nullptr)
-        {
-            if(strcmp(data, "toggle_button") == 0) {
-                wall.get_component<wall_script>().is_on = !wall.get_component<wall_script>().is_on;
-            }
-        }
-        else
-        {
-            std::cout << "received no data\n";
-        }
-    }*/
 
     int mouse_x;
     int mouse_y;
@@ -411,4 +308,23 @@ void game::clean()
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     std::cout << "Vsetko clean";
+}
+
+void game::handle_collision()
+{
+    for (const auto physics_component : game::physics_components)
+    {
+        for (const auto collider_component : game::colliders)
+        {
+            if(physics_component->entity == collider_component->entity) continue;
+            
+            if(collision->aabb(physics_component->entity->get_component<class collider_component>(), *collider_component))
+            {
+                physics_component->entity->get_component<class collider_component>().collided(*collider_component, collider_component->collision_tag);
+                
+                if(!collider_component->trigger)
+                    physics_component->entity->get_component<transform_component>().position = physics_component->late_pos;
+            }
+        }
+    }
 }

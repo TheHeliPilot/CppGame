@@ -26,11 +26,15 @@ public:
     void update();
     void render();
     void clean();
+    void handle_collision();
 
     bool running() const { return is_running_; }
 
+    static SOCKET listen_socket;
+    static SOCKET connect_socket;
     static SDL_Renderer *renderer;
     static SDL_Event event;
+    // ReSharper disable once CppInconsistentNaming
     static manager manager_;
     static asset_manager* asset_manager;
     static vector2 mouse_pos;
