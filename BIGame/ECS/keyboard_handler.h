@@ -1,10 +1,8 @@
 ﻿#pragma once
-
-#include "../game.h"
-//#include "components.h"
-
-#include <vector>
+#include <SDL_keycode.h>
 #include <unordered_set>
+
+#include "ecs.h"
 
 class keyboard_handler final : public component
 {

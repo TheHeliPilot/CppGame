@@ -1,6 +1,10 @@
 ﻿#pragma once
 #include "../ECS/keyboard_handler.h"
-#include "../ECS/components.h"
+#include "../ECS/ecs.h"
+#include "../ECS/physics_component.h"
+#include "../ECS/collider_component.h"
+#include "wall_script.h"
+#include "../vector2.h"
 
 class collider_component;
 

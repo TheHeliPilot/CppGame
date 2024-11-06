@@ -1,13 +1,10 @@
 ﻿#pragma once
 
-#include <iostream>
+#include <vector>
 #include <winsock2.h>
 
 #include "SDL.h"
-#include "collision.h"
 #include "ECS/asset_manager.h"
-#include "ECS/ecs.h"
-//#include "ECS/transform_component.h"
 
 class collider_component;
 class physics_component;
@@ -45,5 +42,6 @@ public:
 
 private:
     bool is_running_;
+    bool is_receiving_;
     SDL_Window *window_;
 };

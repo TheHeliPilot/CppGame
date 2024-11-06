@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL.h>
 #include "game.h"
 

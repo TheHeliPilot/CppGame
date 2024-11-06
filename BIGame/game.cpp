@@ -1,8 +1,11 @@
 ﻿#include "game.h"
 
+#include <thread>
 #include <ws2tcpip.h>
 
+#include "collision.h"
 #include "network_handler.h"
+#include "vector2.h"
 #include "CustomScripts/player_movement.h"
 #include "ECS/keyboard_handler.h"
 #include "ECS/components.h"
@@ -24,6 +27,9 @@ vector2 game::mouse_pos;
 auto collision = new class collision;
 std::vector<collider_component*> game::colliders;
 std::vector<physics_component*> game::physics_components;
+
+//threads
+std::thread recv_thread;
 
 WSADATA game::wsa_data;
 
@@ -203,6 +209,11 @@ void game::init(const char* title, const int x_pos, const int y_pos, const int w
         std::cout << "Connected\n";
         
     }
+
+    //thread
+    network_handler::last_data.flag = "OLD_DATA";
+    recv_thread = std::thread(&network_handler::receive_data_thread, std::ref(connect_socket), std::ref(network_handler::last_data), std::ref(is_receiving_), std::ref(is_running_));
+    
 #pragma endregion
 
     ///ECS
@@ -243,8 +254,6 @@ void game::handle_events()
     }
 }
 
-
-
 void game::update()
 {
     //std::cout << "Updating game\n";
@@ -268,85 +277,100 @@ void game::update()
 
     //TODO Opravit networking na nieco lepsie lebo toto je fakt ze bordel (ale funguje :DDDD)
 
-    if (!is_server_) {
-        network_handler::send_transform_data(connect_socket, player.get_component<transform_component>());
-        network_handler::receive_transform_data(connect_socket, client.get_component<transform_component>());
-    } else {
-        network_handler::handle_client_operations(connect_socket, client, wall);
+    //if (!is_server_) {
+    //    network_handler::send_transform_data(connect_socket, player.get_component<transform_component>());
+    //    network_handler::receive_transform_data(connect_socket, client.get_component<transform_component>());
+    //} else {
+    //    network_handler::handle_client_operations(connect_socket, client, wall);
+    //}
+
+    const char* send_data = network_handler::make_data("player_pos", network_handler::serialize(player.get_component<transform_component>().position));
+    network_handler::send_data(connect_socket, send_data);
+
+    if(!is_receiving_)
+    {
+        std::cout << "recieved data! tag: " << network_handler::last_data.flag << "\n";
+    }
+    else if(strcmp(network_handler::last_data.flag, "OLD_DATA") != 0)
+    {
+        std::cout << "receiving data\n";
+    }else
+    {
+        std::cout << "old data\n";
     }
     
-    //if(is_server_)
+    //const auto* rcv_data = network_handler::rcv_data(connect_socket);
+    //if(rcv_data != nullptr)
     //{
-    //    network_handler::send_data(connect_socket, network_handler::serialize(player.get_component<transform_component>().position), sizeof(vector2));
+    //    const network_data des_data = network_handler::get_data(*rcv_data);
+    //    
+    //    if(strcmp(des_data.flag, "player_pos") == 0)
+    //    {
+    //        client.get_component<transform_component>().position = network_handler::deserialize<vector2>(des_data.data);
+    //    }
     //}
     //else
     //{
-    //    const auto* data = network_handler::rcv_data(connect_socket);
-    //    if(data != nullptr)
-    //    {
-    //       // std::cout << network_handler::deserialize<vector2>(data) << '\n';
-    //        client.get_component<transform_component>().position = network_handler::deserialize<vector2>(data);
-    //    }
-    //    else
-    //    {
-    //        std::cout << "received no data\n";
-    //    }
+    //    std::cout << "received no data\n";
     //}
+
+    
+    
+/*
+    if(!is_server_)
+    {
+        network_handler::send_data(connect_socket, network_handler::serialize(player.get_component<transform_component>().position), sizeof(vector2));
+    }
+    else
+    {
+        const auto* data = network_handler::rcv_data(connect_socket);
+        if(data != nullptr)
+        {
+            //std::cout << network_handler::deserialize<vector2>(data) << '\n';
+            client.get_component<transform_component>().position = network_handler::deserialize<vector2>(data);
+        }
+        else
+        {
+            std::cout << "received no data\n";
+        }
+    }
 //
-    //if(!is_server_)
-    //{
-    //    network_handler::send_data(connect_socket, network_handler::serialize(player.get_component<transform_component>().position), sizeof(vector2));
-    //}
-    //else
-    //{
-    //    const auto* data = network_handler::rcv_data(connect_socket);
-    //    if(data != nullptr)
-    //    {
-    //        //std::cout << network_handler::deserialize<vector2>(data) << '\n';
-    //        client.get_component<transform_component>().position = network_handler::deserialize<vector2>(data);
-    //    }
-    //    else
-    //    {
-    //        std::cout << "received no data\n";
-    //    }
-    //}
+    if(is_server_)
+    {
+        network_handler::send_data(connect_socket, network_handler::serialize(wall.get_component<wall_script>().is_on), sizeof(bool));
+    }else
+    {
+        const auto* data = network_handler::rcv_data(connect_socket);
+        if(data != nullptr)
+        {
+            //std::cout << network_handler::deserialize<vector2>(data) << '\n';
+            if(wall.get_component<wall_script>().is_on != network_handler::deserialize<bool>(data))
+                wall.get_component<wall_script>().is_on = network_handler::deserialize<bool>(data);
+        }
+        else
+        {
+            std::cout << "received no data\n";
+        }
+    }
 //
-    //if(is_server_)
-    //{
-    //    network_handler::send_data(connect_socket, network_handler::serialize(wall.get_component<wall_script>().is_on), sizeof(bool));
-    //}else
-    //{
-    //    const auto* data = network_handler::rcv_data(connect_socket);
-    //    if(data != nullptr)
-    //    {
-    //        //std::cout << network_handler::deserialize<vector2>(data) << '\n';
-    //        if(wall.get_component<wall_script>().is_on != network_handler::deserialize<bool>(data))
-    //            wall.get_component<wall_script>().is_on = network_handler::deserialize<bool>(data);
-    //    }
-    //    else
-    //    {
-    //        std::cout << "received no data\n";
-    //    }
-    //}
-//
-    //if(!is_server_)
-    //{
-    //    const auto dta = "toggle_button";
-    //    network_handler::send_data(connect_socket, dta, strlen(dta));
-    //}else
-    //{
-    //    const auto* data = network_handler::rcv_data(connect_socket);
-    //    if(data != nullptr)
-    //    {
-    //        if(strcmp(data, "toggle_button") == 0) {
-    //            wall.get_component<wall_script>().is_on = !wall.get_component<wall_script>().is_on;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        std::cout << "received no data\n";
-    //    }
-    //}
+    if(!is_server_)
+    {
+        const auto dta = "toggle_button";
+        network_handler::send_data(connect_socket, dta, strlen(dta));
+    }else
+    {
+        const auto* data = network_handler::rcv_data(connect_socket);
+        if(data != nullptr)
+        {
+            if(strcmp(data, "toggle_button") == 0) {
+                wall.get_component<wall_script>().is_on = !wall.get_component<wall_script>().is_on;
+            }
+        }
+        else
+        {
+            std::cout << "received no data\n";
+        }
+    }*/
 
     int mouse_x;
     int mouse_y;

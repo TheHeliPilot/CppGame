@@ -1,7 +1,8 @@
 ﻿#pragma once
 
-#include "../vector2.h"
-#include "ecs.h"
+class vector2;
+class entity;
+class manager;
 
 class asset_manager
 {

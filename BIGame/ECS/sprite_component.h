@@ -1,7 +1,8 @@
 ﻿#pragma once
+#include <SDL_render.h>
+#include "ecs.h"
 
-#include "components.h"
-#include "../texture_manager.h"
+class transform_component;
 
 class sprite_component : public component
 {
@@ -18,31 +19,11 @@ public:
                 SDL_DestroyTexture(texture_);
         }
         
-        void set_tex(const char* path)
-        {
-                texture_ = texture_manager::load_texture(path);
-        }
+        void set_tex(const char* path);
 
-        void init() override
-        {
-                transform_ = &entity->get_component<transform_component>();
-                
-                src_rect_.x = src_rect_.y = 0;
-                src_rect_.w = transform_->width;
-                src_rect_.h = transform_->height;
-        }
-        void update() override
-        {
-                dest_rect_.x = static_cast<int>(transform_->position.x);
-                dest_rect_.y = static_cast<int>(transform_->position.y);
-
-                dest_rect_.w = transform_->width * transform_->scale;
-                dest_rect_.h = transform_->width * transform_->scale;
-        }
-        void draw() override
-        {
-                texture_manager::draw(texture_, src_rect_, dest_rect_);
-        }
+        void init() override;
+        void update() override;
+        void draw() override;
 
 private:
         transform_component *transform_;

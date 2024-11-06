@@ -1,4 +1,5 @@
 ﻿#include "keyboard_handler.h"
+#include "../game.h"
 
 keyboard_handler::keyboard_handler()
 = default;

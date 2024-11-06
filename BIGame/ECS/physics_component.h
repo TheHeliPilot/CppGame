@@ -1,7 +1,8 @@
 ﻿#pragma once
-
-#include "components.h"
+#include "ecs.h"
 #include "../vector2.h"
+
+class transform_component;
 
 class physics_component final : public component {
 public:
@@ -9,39 +10,15 @@ public:
     vector2 last_pos;
     vector2 late_pos;
     
-    explicit physics_component(const float drag)
-    {
-        drag_ = drag;
-    }
+    explicit physics_component(const float drag);
     
-    void init() override
-    {
-        transform_ = &entity->get_component<transform_component>();
-        game::physics_components.emplace_back(this);
-    }
+    void init() override;
     
-    void update() override
-    {
-        last_velocity = velocity_;
-        late_pos = last_pos;
-        last_pos = transform_->position;
-        
-        transform_->position += velocity_;
-        velocity_ = velocity_ * (1 - drag_);
-    }
+    void update() override;
 
-    void add_force(const vector2 force)
-    {
-        velocity_ += force;
-    }
-    void set_velocity(const vector2 velocity)
-    {
-        velocity_ = velocity;
-    }
-    void set_pos(const vector2 pos) const
-    {
-        transform_->position = pos;
-    }
+    void add_force(const vector2 force);
+    void set_velocity(const vector2 velocity);
+    void set_pos(const vector2 pos) const;
     
 private:
     vector2 velocity_ = vector2(0, 0);

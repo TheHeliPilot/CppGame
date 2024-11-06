@@ -6,6 +6,9 @@ C:\Users\bucka\Počítač\BIGame\BIGame\ECS\asset_manager.cpp;C:\Users\bucka\Po�
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\collider_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\collider_component.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\ecs.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\ecs.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\keyboard_handler.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\keyboard_handler.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\ECS\physics_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\physics_component.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\ECS\sprite_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\sprite_component.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\ECS\transform_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\transform_component.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\game.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\game.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\game_object.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\game_object.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\network_handler.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\network_handler.obj

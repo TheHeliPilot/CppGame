@@ -1,6 +1,10 @@
 ﻿#pragma once
+#include <SDL_rect.h>
+#include <string>
 
-#include "components.h"
+#include "ecs.h"
+
+class transform_component;
 
 class collider_component : public component
 {
@@ -34,7 +38,8 @@ public:
         return std::find(current_collision_tags_.begin(), current_collision_tags_.end(), tag) != current_collision_tags_.end();
     }
 
-    collider_component get_collider_with_tag(const std::string& tag) {
+    collider_component get_collider_with_tag(const std::string& tag) const
+    {
         for (const auto& component : current_collision_components_) {
             if (component.collision_tag == tag) {
                 return component;
@@ -43,25 +48,9 @@ public:
         return collider_component("NO_COMPONENT"); // Return nullopt if no matching collider is found
     }
 
-    void init() override
-    {
-        if(!entity->has_component<transform_component>())
-        {
-            entity->add_component<transform_component>();
-        }
-        transform = &entity->get_component<transform_component>();
+    void init() override;
 
-        game::colliders.emplace_back(this);
-    }
-
-    void update() override
-    {
-        collider.x = static_cast<int>(transform->position.x);
-        collider.y = static_cast<int>(transform->position.y);
-        collider.w = transform->width * transform->scale;
-        collider.h = transform->height * transform->scale;
-        
-    }
+    void update() override;
 
     void late_update() override
     {
