@@ -4,7 +4,7 @@
 #include <SDL_timer.h>
 
 #include "vector2.h"
-#include "CustomScripts/wall_script.h"
+#include "CustomScripts/button_script.h"
 #include "ECS/transform_component.h"
 
 
@@ -61,7 +61,7 @@ void network_handler::receive_data_thread(
     }
 }
 
-void network_handler::process_received_data(entity& player, entity& client, entity& wall)
+void network_handler::process_received_data(entity& player, const entity& client, const entity& button, const entity& plate1)
 {
     std::vector<network_data> temp_data;
 
@@ -80,9 +80,13 @@ void network_handler::process_received_data(entity& player, entity& client, enti
         {
             client.get_component<transform_component>().position = deserialize_vector2(data.data);
         }
-        else if (strcmp(data.flag, "wall_switch") == 0)
+        else if (strcmp(data.flag, "button_switch") == 0)
         {
-            wall.get_component<wall_script>().is_on = deserialize_bool(data.data);
+            button.get_component<button_script>().is_on = deserialize_bool(data.data);
+        }
+        else if (strcmp(data.flag, "plate") == 0)
+        {
+            plate1.get_component<button_script>().is_on = deserialize_bool(data.data);
         }
     }
 }

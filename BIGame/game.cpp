@@ -35,7 +35,8 @@ WSADATA game::wsa_data;
 
 auto& player = game::manager_.add_entity();
 auto& client = game::manager_.add_entity();
-auto& wall = game::manager_.add_entity();
+auto& button = game::manager_.add_entity();
+auto& pressure_plate = game::manager_.add_entity();
 
 enum group_labes : size_t
 {
@@ -219,10 +220,15 @@ void game::init(const char* title, const int x_pos, const int y_pos, const int w
     ///ECS
 
     //static
-    wall.add_component<transform_component>(200,200, 16, 16, 3);
-    wall.add_component<sprite_component>("assets/textures/wall.png");
-    wall.add_component<collider_component>("wall", true);
-    wall.add_component<wall_script>();
+    button.add_component<transform_component>(100,100, 16, 16, 1);
+    button.add_component<sprite_component>("assets/textures/wall.png");
+    button.add_component<collider_component>("button", true);
+    button.add_component<button_script>("assets/textures/player2.png", "assets/textures/wall.png");
+
+    pressure_plate.add_component<transform_component>(100,300, 16, 16, 1);
+    pressure_plate.add_component<sprite_component>("assets/textures/pressure_plate_off.png");
+    pressure_plate.add_component<collider_component>("plate", true);
+    pressure_plate.add_component<button_script>("assets/textures/pressure_plate_on.png", "assets/textures/pressure_plate_off.png");
 
     //player
     player.add_component<transform_component>();
@@ -264,9 +270,8 @@ void game::update()
     //sending data
     network_handler::send_data(connect_socket, network_handler::make_data("player_pos", network_handler::serialize_vector2(player.get_component<transform_component>().position)));
 
-
     //handle data
-    network_handler::process_received_data(player, client, wall);
+    network_handler::process_received_data(player, client, button, pressure_plate);
     
 
     int mouse_x;
@@ -289,15 +294,6 @@ void game::render()
     SDL_RenderClear(renderer);
 
     manager_.draw();
-    
-    //for(const auto& d : default_obj)
-    //{
-    //    d->draw();
-    //}
-    //for(const auto& a : arrow_obj)
-    //{
-    //    a->draw();
-    //}
 
     SDL_RenderPresent(renderer);
 }

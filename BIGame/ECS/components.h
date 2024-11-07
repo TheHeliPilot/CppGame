@@ -7,4 +7,4 @@
 #include "sprite_component.h"
 #include "transform_component.h"
 #include "../CustomScripts/player_movement.h"
-#include "../CustomScripts/wall_script.h"
+#include "../CustomScripts/button_script.h"

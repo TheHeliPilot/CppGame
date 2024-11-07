@@ -6,7 +6,7 @@
 #include "vector2.h"
 
 class entity;
-class wall_script;
+class button_script;
 class transform_component;
 
 struct network_data
@@ -26,7 +26,7 @@ public:
     static char* rcv_data(const SOCKET s);
 
     static void receive_data_thread(const SOCKET& connect_socket, std::vector<network_data>& last_data_, bool& is_receiving, const bool& should_listen);
-    static void process_received_data(entity& player, entity& client, entity& wall);
+    static void process_received_data(entity& player, const entity& client, const entity& button, const entity& plate1);
 
     template <typename T, typename U>
     static bool is_of_type(const U& obj) {

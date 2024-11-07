@@ -1,7 +1,7 @@
 C:\Users\bucka\Počítač\BIGame\BIGame\BIGame.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\BIGame.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\collision.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\collision.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\CustomScripts\player_movement.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\player_movement.obj
-C:\Users\bucka\Počítač\BIGame\BIGame\CustomScripts\wall_script.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\wall_script.obj
+C:\Users\bucka\Počítač\BIGame\BIGame\CustomScripts\button_script.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\button_script.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\asset_manager.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\asset_manager.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\collider_component.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\collider_component.obj
 C:\Users\bucka\Počítač\BIGame\BIGame\ECS\ecs.cpp;C:\Users\bucka\Počítač\BIGame\BIGame\x64\Debug\ecs.obj

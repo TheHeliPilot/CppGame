@@ -67,6 +67,7 @@ inline void component::draw()
 class entity
 {
 private:
+    // ReSharper disable once CppInconsistentNaming
     manager& manager;
     bool active_ = true;
     std::vector<std::unique_ptr<component>> components;

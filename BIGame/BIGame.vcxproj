@@ -237,7 +237,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="CustomScripts\player_movement.cpp" />
-    <ClCompile Include="CustomScripts\wall_script.cpp" />
+    <ClCompile Include="CustomScripts\button_script.cpp" />
     <ClCompile Include="ECS\asset_manager.cpp" />
     <ClCompile Include="ECS\collider_component.cpp" />
     <ClCompile Include="ECS\ecs.cpp" />
@@ -254,7 +254,7 @@
   <ItemGroup>
     <ClInclude Include="collision.h" />
     <ClInclude Include="CustomScripts\player_movement.h" />
-    <ClInclude Include="CustomScripts\wall_script.h" />
+    <ClInclude Include="CustomScripts\button_script.h" />
     <ClInclude Include="ECS\asset_manager.h" />
     <ClInclude Include="ECS\collider_component.h" />
     <ClInclude Include="ECS\components.h" />
