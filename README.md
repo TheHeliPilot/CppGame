@@ -52,6 +52,6 @@ The game employs an Entity-Component System (ECS) for efficient object and compo
 - Winsocks for networking
 
 ## Future Improvements
-- Add more interactive objects and complex scenes.
+- Prefabs to allow network entity instantiation
 - Implement multiple client support.
 - Enhance collision detection techniques.
