@@ -105,10 +105,10 @@ public:
         }
     
         // Calculate the length of the flag
-        size_t flag_length = pos - serialized;
+        const size_t flag_length = pos - serialized;
     
         // Allocate memory for the flag and copy the flag data
-        char* flag = new char[flag_length + 1];
+        const auto flag = new char[flag_length + 1];
         std::strncpy(flag, serialized, flag_length);
         flag[flag_length] = '\0';
         data.flag = flag;
@@ -125,8 +125,8 @@ public:
         }
     
         // Extract the `data_size` string
-        size_t size_str_length = next_pos - pos;
-        char* size_str = new char[size_str_length + 1];
+        const size_t size_str_length = next_pos - pos;
+        const auto size_str = new char[size_str_length + 1];
         std::strncpy(size_str, pos, size_str_length);
         size_str[size_str_length] = '\0';
     
@@ -138,7 +138,7 @@ public:
         next_pos++;
     
         // Extract the `data`
-        size_t data_length = std::strlen(next_pos);
+        const size_t data_length = std::strlen(next_pos);
         data.data = new char[data_length + 1];
         std::strncpy(data.data, next_pos, data_length);
         data.data[data_length] = '\0';

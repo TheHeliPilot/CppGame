@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <string>
+#include <vector>
 
 class vector2;
 class entity;
@@ -10,7 +12,9 @@ public:
     asset_manager(manager* m);
     ~asset_manager();
     
-    entity* instantiate_asset(vector2 pos, float scale = 1) const;
+    static std::vector<entity> instantiated_entities = {};
+
+    entity* instantiate(vector2 pos, float scale = 1, const std::string& image = "NO_IMAGE") const;
 
 private:
     manager* manager_;
