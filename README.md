@@ -12,8 +12,7 @@ This is a C++ game (more of an engine) created using the SDL graphics library fo
   - `Space` - Interact
 
 - **How to Play**:
-  1. Start the `server.exe` executable.
-  2. Start the `client.exe` executable (only one client can connect at a time).
+  1. Run BIGame with true/false for server/client parameters. (only 1 client can connect!)
 
 - **Game Scene**:
   - Contains two interactable buttons.
@@ -44,7 +43,7 @@ The game employs an Entity-Component System (ECS) for efficient object and compo
 
 ## Setup
 1. Ensure that both `server.exe` and `client.exe` are in the same network. (localhost, I did not make the network changable by parameters)
-2. Run `server.lnk` and `client.lnk`, or run BIGame with true/false for server/client parameters. (only 1 client can connect!)
+2. Run BIGame with true/false for server/client parameters. (only 1 client can connect!)
 
 ## Dependencies
 - SDL graphics library
