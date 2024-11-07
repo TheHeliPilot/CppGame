@@ -30,9 +30,15 @@ public:
     vector2& operator*(const float& i);
     vector2& zero();
 
+    static float angle(const vector2& vec, const vector2& vec2);
+
+    static vector2 rotate_vector(vector2 vec, float angleDeg);
+
     float length() const;
     vector2& normalize() const;
 
+    static vector2 abs_substract(const vector2& v1, const vector2& v2);
+    
     vector2 operator-() const
     {
         return vector2(-x, -y);

@@ -5,6 +5,7 @@
 
 #include "vector2.h"
 #include "CustomScripts/button_script.h"
+#include "ECS/asset_manager.h"
 #include "ECS/transform_component.h"
 
 
@@ -50,18 +51,18 @@ void network_handler::receive_data_thread(
         const network_data data = get_data(*rcv_data);
         if (sizeof(data.data) == data.data_size)
         {
-            std::cout << "Received data from client" << '\n';
+            //std::cout << "Received data from client" << '\n';
             {
                 std::lock_guard<std::mutex> lock(last_data_mutex);
                 last_data.push_back(data);
             }
-            std::cout << "pushed back data: " << data.flag << '\n';
+            //std::cout << "pushed back data: " << data.flag << '\n';
             is_receiving = false;
         }
     }
 }
 
-void network_handler::process_received_data(entity& player, const entity& client, const entity& button, const entity& plate1)
+void network_handler::process_received_data(entity* player, const entity* client, const entity* button, const entity* plate1)
 {
     std::vector<network_data> temp_data;
 
@@ -78,15 +79,15 @@ void network_handler::process_received_data(entity& player, const entity& client
 
         if (strcmp(data.flag, "player_pos") == 0)
         {
-            client.get_component<transform_component>().position = deserialize_vector2(data.data);
+            client->get_component<transform_component>().position = deserialize_vector2(data.data);
         }
         else if (strcmp(data.flag, "button_switch") == 0)
         {
-            button.get_component<button_script>().is_on = deserialize_bool(data.data);
+            manager::get_entity_by_id(data.entity_index)->get_component<button_script>().is_on = deserialize_bool(data.data);
         }
         else if (strcmp(data.flag, "plate") == 0)
         {
-            plate1.get_component<button_script>().is_on = deserialize_bool(data.data);
+            plate1->get_component<button_script>().is_on = deserialize_bool(data.data);
         }
     }
 }

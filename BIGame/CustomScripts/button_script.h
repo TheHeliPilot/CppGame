@@ -14,9 +14,20 @@ button_script(std::string on, std::string off): is_on(false)
     this->off = std::move(off);
 }
 
+    button_script(std::string on, std::string off, const bool rep): is_on(false)
+{
+    replicates_ = rep;
+    this->on = std::move(on);
+    this->off = std::move(off);
+}
+
 bool is_on;
     std::string on;
     std::string off;
 
     void update() override;
+
+private:
+    bool replicates_ = true;
+    bool last_state_ = false;
 };

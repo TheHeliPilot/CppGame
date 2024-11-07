@@ -26,5 +26,5 @@ void sprite_component::update()
 }
 void sprite_component::draw()
 {
-    texture_manager::draw(texture_, src_rect_, dest_rect_);
+    texture_manager::draw(texture_, src_rect_, dest_rect_, transform_->rotation, nullptr, SDL_FLIP_NONE);
 }

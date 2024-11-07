@@ -12,7 +12,7 @@ SDL_Texture* texture_manager::load_texture(const char* file_name)
     return tex;
 }
 
-void texture_manager::draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst)
+void texture_manager::draw(SDL_Texture* tex, const SDL_Rect src, const SDL_Rect dst, const double angle, const SDL_Point* center = nullptr, const SDL_RendererFlip flip = SDL_FLIP_NONE)
 {
-    SDL_RenderCopy(game::renderer, tex, &src, &dst);
+    SDL_RenderCopyEx(game::renderer, tex, &src, &dst, angle, center, flip);
 }

@@ -9,7 +9,7 @@
 
 game *game_instance = nullptr;
 
-int main(int argc, char* argv[])
+int main(const int argc, char* argv[])
 {
     constexpr int max_fps = 60;
     constexpr int frame_delay = 1000 / max_fps;
@@ -35,6 +35,7 @@ int main(int argc, char* argv[])
         
         game_instance->handle_events();
         game_instance->update();
+        //std::cout << "ended main update complete";
         game_instance->render();
 
         const int frame_time = SDL_GetTicks() - frame_start;

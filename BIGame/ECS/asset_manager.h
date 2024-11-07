@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include <string>
+
+#include <memory>
 #include <vector>
 
 class vector2;
@@ -9,12 +10,16 @@ class manager;
 class asset_manager
 {
 public:
-    asset_manager(manager* m);
+    explicit asset_manager(manager* m);
     ~asset_manager();
     
-    static std::vector<entity> instantiated_entities = {};
+    static std::vector<std::unique_ptr<entity>> instantiate_entities_buffer;
 
-    entity* instantiate(vector2 pos, float scale = 1, const std::string& image = "NO_IMAGE") const;
+    static entity* instantiate(vector2 pos, float scale, bool replicates, uint32_t id = -1);
+    static void create_buffered_entities();
+    static entity* instantiate(vector2 pos, float scale, bool replicates, float rotation);
+    static entity* instantiate(vector2 pos, float scale, bool replicates, const char* image);
+    struct object_replication_data;
 
 private:
     manager* manager_;

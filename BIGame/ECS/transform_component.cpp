@@ -1,5 +1,8 @@
 ﻿#include "transform_component.h"
 
+#include "../game.h"
+#include "../network_handler.h"
+
 transform_component::transform_component()
 {
     position.x = 0.0f;
@@ -32,4 +35,21 @@ transform_component::transform_component(const vector2& position, const int scal
 {
     this->position = position;
     this->scale = scale;
+}
+
+transform_component::transform_component(const vector2& position, const int scale, const float rotation)
+{
+    this->position = position;
+    this->scale = scale;
+    this->rotation = rotation;
+}
+
+vector2 transform_component::up() const
+{
+    return vector2::rotate_vector({0,1}, rotation);
+}
+
+vector2 transform_component::right() const
+{
+    return vector2::rotate_vector({1,0}, rotation);
 }

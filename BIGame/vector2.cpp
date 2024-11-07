@@ -1,5 +1,7 @@
 ﻿#include "vector2.h"
 
+#include <SDL_stdinc.h>
+
 vector2::vector2()
 {
     x = 0.0f;
@@ -99,6 +101,40 @@ vector2& vector2::zero()
     this->x = 0.0f;
     this->y = 0.0f;
     return *this;
+}
+
+vector2 vector2::abs_substract(const vector2& v1, const vector2& v2)
+{
+    return vector2(fabs(v1.x - v2.x), fabs(v1.y - v2.y));
+}
+
+float vector2::angle(const vector2& vec, const vector2& vec2) {
+    const float dot_product = vec.x * vec2.x + vec.y * vec2.y;
+    const float magnitude1 = vec.length();
+    const float magnitude2 = vec2.length();
+
+    if (magnitude1 == 0 || magnitude2 == 0) {
+        return 0.0f;
+    }
+
+    const float cos_theta = dot_product / (magnitude1 * magnitude2);
+    // Clamp cos_theta to [-1, 1] to prevent domain errors in acos
+    const float clamped_cos_theta = cos_theta < -1.0f ? -1.0f : cos_theta > 1.0f ? 1.0f : cos_theta;
+
+    return acos(clamped_cos_theta) * (180.0/3.141592653589793238463);
+}
+
+vector2 vector2::rotate_vector(const vector2 vec, const float angleDeg)
+{
+    float angleRad = angleDeg * (M_PI / 180.0);
+    
+    float x = vec.x;
+    float y = vec.y;
+    
+    float x_prime = x * cos(angleRad) - y * sin(angleRad);
+    float y_prime = x * sin(angleRad) + y * cos(angleRad);
+    
+    return {x_prime, y_prime};
 }
 
 float vector2::length() const

@@ -15,7 +15,7 @@ class game
 {
 public:
     // ReSharper disable once CppInconsistentNaming
-    bool is_server_;
+    static bool is_server_;
 
     game();
     ~game();
