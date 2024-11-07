@@ -43,15 +43,14 @@ The game employs an Entity-Component System (ECS) for efficient object and compo
   - Handled on a different thread to ensure continuous gameplay and prevent delays.
 
 ## Setup
-1. Ensure that both `server.exe` and `client.exe` are in the same network.
-2. Run `server.exe` to start the server.
-3. Run `client.exe` to connect to the server. Ensure only one instance of `client.exe` is running at a time.
+1. Ensure that both `server.exe` and `client.exe` are in the same network. (localhost, I did not make the network changable by parameters)
+2. Run `server.lnk` and `client.lnk`, or run BIGame with true/false for server/client parameters. (only 1 client can connect!)
 
 ## Dependencies
 - SDL graphics library
 - Winsocks for networking
 
 ## Future Improvements
-- Prefabs to allow network entity instantiation
+- Prefabs to allow network entity instantiation.
 - Implement multiple client support.
-- Enhance collision detection techniques.
+- Enhance collision detection.
