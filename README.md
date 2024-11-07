@@ -1,7 +1,7 @@
-# C++ Game with SDL and Winsocks
+# C++ Game (engine?) with SDL and Winsocks
 
 ## Overview
-This is a C++ game created using the SDL graphics library for rendering and Winsocks for networking. The game features a Client-Server architecture, basic collision detection, and a simple interaction system.
+This is a C++ game (more of an engine) created using the SDL graphics library for rendering and Winsocks for networking. The game features a Client-Server architecture, basic collision detection, and a simple interaction system.
 
 ## Gameplay
 - **Controls**:
