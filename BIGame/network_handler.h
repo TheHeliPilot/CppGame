@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "vector2.h"
+#include "ECS/ecs.h"
 
 class entity;
 class button_script;
@@ -12,7 +13,7 @@ class transform_component;
 struct network_data
 {
     int data_size;
-    int entity_index;
+    entity_id entity_index;
     const char* flag;
     char* data;
 };

@@ -67,10 +67,12 @@ inline void component::draw()
 {
 }
 
+using entity_id = uint32_t;
+
 class entity
 {
 private:
-    uint32_t id_;
+    entity_id id_;
     // ReSharper disable once CppInconsistentNaming
     manager& manager;
     bool active_ = true;
@@ -81,7 +83,7 @@ private:
     group_bit_set group_bit_set_;
 
 public:
-    entity(class manager& manager, const uint32_t id) : id_(id), manager(manager) {}
+    entity(class manager& manager, const entity_id id) : id_(id), manager(manager) {}
     
     void update() {
         //std::cout << "Updating inside entity with ID: " << id_ << '\n';
@@ -189,7 +191,7 @@ class manager
 private:
     std::array<std::vector<entity*>, max_groups> grouped_elements_;
     static std::unordered_map<uint32_t, entity*> entity_map_;
-    uint32_t next_id_ = 0;
+    entity_id next_id_ = 0;
 
 public:
     std::vector<std::unique_ptr<entity>> entities_;
@@ -199,7 +201,7 @@ public:
         //std::cout << "Current entities in update: " << entities_.size() << '\n';
         
         try{
-            for(auto& e : entities_) {
+            for(const auto& e : entities_) {
                 if (e->is_active()) {
                     //std::cout << "Updating entity ID: " << e->get_id() << '\n';
                     e->update();
@@ -276,7 +278,6 @@ public:
 
         entities_.emplace_back(std::move(e));
 
-        // Use the entity's ID here, no need to handle next_id_ incrementation
         entity_map_[e_ref.get_id()] = &e_ref;
 
         //std::cout << "Entity added with ID " << e_ref.get_id() << '\n';
@@ -297,10 +298,10 @@ public:
         {
             return it->second;
         }
-        return nullptr; // Return nullptr if the ID doesn't exist
+        return nullptr;
     }
 
-    uint32_t next_id() {
+    entity_id next_id() {
         return next_id_++;
     }
 };
